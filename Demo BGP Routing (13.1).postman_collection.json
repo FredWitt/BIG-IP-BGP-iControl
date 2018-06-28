@@ -1,0 +1,489 @@
+{
+	"variables": [],
+	"info": {
+		"name": "Demo BGP Routing (13.1)",
+		"_postman_id": "ccf57128-c6c6-b73d-75f3-77ec45d76c1e",
+		"description": "BGP routing configuration for 13.1.0.1",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Enable sys db variable",
+			"request": {
+				"url": "https://10.128.1.245/mgmt/tm/sys/db/tmrouted.tmos.routing/",
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Basic YWRtaW46YWRtaW4=",
+						"description": ""
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"value\": \"enable\"}"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Show RD0 Routing Protocols",
+			"request": {
+				"url": "https://10.128.1.245/mgmt/tm/net/route-domain/0/ ",
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Basic YWRtaW46YWRtaW4=",
+						"description": ""
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Remove Existing RD0 Routing Protocols",
+			"request": {
+				"url": "https://10.128.1.245/mgmt/tm/net/route-domain/0/ ",
+				"method": "PATCH",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Basic YWRtaW46YWRtaW4=",
+						"description": ""
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"routingProtocol\": []}"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Show BGP Status",
+			"request": {
+				"url": "https://10.128.1.245/mgmt/tm/net/routing/profile/bgp",
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Basic YWRtaW46YWRtaW4=",
+						"description": ""
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Creat Profile and Enable BGP (new AS)",
+			"request": {
+				"url": "https://10.128.1.245/mgmt/tm/net/routing/bgp",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Basic YWRtaW46YWRtaW4=",
+						"description": ""
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"name\":\"test\",\"localAs\":\"65001\"}"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Show New BGP Profile Config",
+			"request": {
+				"url": {
+					"raw": "https://10.128.1.245/mgmt/tm/net/routing/bgp/~Common~test?ver=13.1.0.1",
+					"protocol": "https",
+					"host": [
+						"10",
+						"128",
+						"1",
+						"245"
+					],
+					"path": [
+						"mgmt",
+						"tm",
+						"net",
+						"routing",
+						"bgp",
+						"~Common~test"
+					],
+					"query": [
+						{
+							"key": "ver",
+							"value": "13.1.0.1",
+							"equals": true,
+							"description": ""
+						}
+					],
+					"variable": []
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Basic YWRtaW46YWRtaW4=",
+						"description": ""
+					}
+				],
+				"body": {},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Create New BGP Neighbor",
+			"request": {
+				"url": "https://10.128.1.245/mgmt/tm/net/routing/bgp/~Common~test/neighbor",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Basic YWRtaW46YWRtaW4=",
+						"description": ""
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"name\": \"1.1.1.1\", \"remoteAs\": \"650012\", \"fallOver\": \"bfd\"}"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Show New BGP Neighbor",
+			"request": {
+				"url": "https://10.128.1.245/mgmt/tm/net/routing/bgp/~Common~test/neighbor",
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Basic YWRtaW46YWRtaW4=",
+						"description": ""
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"name\": \"1.1.1.1\", \"remoteAs\": \"650012\"}"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Modify BGP Neighbor 1.1.1.1",
+			"request": {
+				"url": {
+					"raw": "https://10.128.1.245/mgmt/tm/net/routing/bgp/~Common~test/neighbor/1.1.1.1?ver=13.1.0.1",
+					"protocol": "https",
+					"host": [
+						"10",
+						"128",
+						"1",
+						"245"
+					],
+					"path": [
+						"mgmt",
+						"tm",
+						"net",
+						"routing",
+						"bgp",
+						"~Common~test",
+						"neighbor",
+						"1.1.1.1"
+					],
+					"query": [
+						{
+							"key": "ver",
+							"value": "13.1.0.1",
+							"equals": true,
+							"description": ""
+						}
+					],
+					"variable": []
+				},
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Basic YWRtaW46YWRtaW4=",
+						"description": ""
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"name\": \"1.1.1.1\", \"remoteAs\": \"650012\", \"description\": \"API_Created_Neighbor\", \"fallOver\": \"bfd\", \"password\": \"fred123\", \"addressFamily\": [{\"name\": \"ipv4\",\"softReconfigurationInbound\": \"enabled\"}]}"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Show New BGP Neighbor 1.1.1.1",
+			"request": {
+				"url": "https://10.128.1.245/mgmt/tm/net/routing/bgp/~Common~test/neighbor/1.1.1.1",
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Basic YWRtaW46YWRtaW4=",
+						"description": ""
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"name\": \"1.1.1.1\", \"remoteAs\": \"650012\"}"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Create New Route-Map",
+			"request": {
+				"url": "https://10.128.1.245/mgmt/tm/net/routing/route-map/",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Basic YWRtaW46YWRtaW4=",
+						"description": ""
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": " {\"name\": \"API-Route-Map\", \"partition\": \"Common\", \"description\": \"API_Route_MAP\", \"routeDomain\": \"/Common/0\", \"ip\": {\"nextHop\": {\"address\": \"10.22.45.25\"} } } "
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Show Route-Map",
+			"request": {
+				"url": "https://10.128.1.245/mgmt/tm/net/routing/route-map/",
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Basic YWRtaW46YWRtaW4=",
+						"description": ""
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": " {\"name\": \"API-Route-Map\", \"partition\": \"Common\", \"description\": \"API_Route_MAP\", \"routeDomain\": \"/Common/0\"}"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Modify Route-Map",
+			"request": {
+				"url": "https://10.128.1.245/mgmt/tm/net/routing/route-map/~Common~API-Route-Map/entries",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Basic YWRtaW46YWRtaW4=",
+						"description": ""
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"name\": \"10\",\"action\": \"permit\",\"ip\": {\"nextHop\": {\"address\": \"10.22.45.25\"} } }"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Show Route-Map copy",
+			"request": {
+				"url": "https://10.128.1.245/mgmt/tm/net/routing/route-map/",
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Basic YWRtaW46YWRtaW4=",
+						"description": ""
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": " {\"name\": \"API-Route-Map\", \"partition\": \"Common\", \"description\": \"API_Route_MAP\", \"routeDomain\": \"/Common/0\"}"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Neighbor 1.1.1.1",
+			"request": {
+				"url": {
+					"raw": "https://10.128.1.245/mgmt/tm/net/routing/bgp/~Common~test/neighbor/1.1.1.1?ver=13.1.0.1",
+					"protocol": "https",
+					"host": [
+						"10",
+						"128",
+						"1",
+						"245"
+					],
+					"path": [
+						"mgmt",
+						"tm",
+						"net",
+						"routing",
+						"bgp",
+						"~Common~test",
+						"neighbor",
+						"1.1.1.1"
+					],
+					"query": [
+						{
+							"key": "ver",
+							"value": "13.1.0.1",
+							"equals": true,
+							"description": ""
+						}
+					],
+					"variable": []
+				},
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Basic YWRtaW46YWRtaW4=",
+						"description": ""
+					}
+				],
+				"body": {},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Delete BGP Instance",
+			"request": {
+				"url": {
+					"raw": "https://10.128.1.245/mgmt/tm/net/routing/bgp/~Common~test?ver=13.1.0.1",
+					"protocol": "https",
+					"host": [
+						"10",
+						"128",
+						"1",
+						"245"
+					],
+					"path": [
+						"mgmt",
+						"tm",
+						"net",
+						"routing",
+						"bgp",
+						"~Common~test"
+					],
+					"query": [
+						{
+							"key": "ver",
+							"value": "13.1.0.1",
+							"equals": true,
+							"description": ""
+						}
+					],
+					"variable": []
+				},
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Basic YWRtaW46YWRtaW4=",
+						"description": ""
+					}
+				],
+				"body": {},
+				"description": ""
+			},
+			"response": []
+		}
+	]
+}
